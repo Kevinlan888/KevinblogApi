@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KevinBlogApi.Web", "KevinBlogApi.WebHost\KevinBlogApi.Web.csproj", "{DC5AD839-5547-41AF-9539-161881F22C77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KevinBlogApi.Core", "KevinBlogApi.Core\KevinBlogApi.Core.csproj", "{239D5F71-E966-498B-ADE7-2A57F4692DE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KevinBlogApi.Core", "KevinBlogApi.Core\KevinBlogApi.Core.csproj", "{239D5F71-E966-498B-ADE7-2A57F4692DE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KevinBlogApi.Data", "KevinBlogApi.Data\KevinBlogApi.Data.csproj", "{695C3AC0-159F-4AE6-9D97-678BD1D7FB4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KevinBlogApi.Data", "KevinBlogApi.Data\KevinBlogApi.Data.csproj", "{695C3AC0-159F-4AE6-9D97-678BD1D7FB4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KevinBlogApi.Web", "KevinBlogApi.Web\KevinBlogApi.Web.csproj", "{B4161F2F-913A-42F6-B403-30EE26FD1A6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DC5AD839-5547-41AF-9539-161881F22C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC5AD839-5547-41AF-9539-161881F22C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC5AD839-5547-41AF-9539-161881F22C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC5AD839-5547-41AF-9539-161881F22C77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{239D5F71-E966-498B-ADE7-2A57F4692DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{239D5F71-E966-498B-ADE7-2A57F4692DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{239D5F71-E966-498B-ADE7-2A57F4692DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{695C3AC0-159F-4AE6-9D97-678BD1D7FB4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{695C3AC0-159F-4AE6-9D97-678BD1D7FB4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{695C3AC0-159F-4AE6-9D97-678BD1D7FB4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4161F2F-913A-42F6-B403-30EE26FD1A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4161F2F-913A-42F6-B403-30EE26FD1A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4161F2F-913A-42F6-B403-30EE26FD1A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4161F2F-913A-42F6-B403-30EE26FD1A6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
