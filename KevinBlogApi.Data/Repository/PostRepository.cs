@@ -23,6 +23,7 @@ namespace KevinBlogApi.Data.Repository
             {
                 post.PostId = Guid.NewGuid().ToString();
                 await _context.Posts.AddAsync(post);
+                await _context.SaveChangesAsync();
                 return true;
             }
             else

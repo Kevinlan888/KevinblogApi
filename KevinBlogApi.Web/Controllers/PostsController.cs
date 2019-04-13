@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using KevinBlogApi.Core.Model;
 using KevinBlogApi.Core.Model.Interface;
 using KevinBlogApi.Web.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -36,7 +38,9 @@ namespace KevinBlogApi.Web.Controllers
             try
             {
                 var post = await _post.GetPost(s => s.Slug == slug);
-                return Ok(post);
+                if (post != null)
+                    return Ok(post);
+                else return NotFound();
             }
             catch(Exception ex)
             {
@@ -52,18 +56,30 @@ namespace KevinBlogApi.Web.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put([FromBody] AddPostViewModel value)
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<string>> Put([FromBody] AddPostViewModel value)
         {
-            var post = new Post()
+            try
             {
-                Slug = value.Slug,
-                MarkDown = value.MarkDown,
-                Content = value.Content,
-                CreateDate = DateTime.Now,
-                Tag = value.Tag,
-                Title = value.Title 
-            };
+                var post = new Post()
+                {
+                    Slug = value.Slug,
+                    MarkDown = value.MarkDown,
+                    Content = value.Content,
+                    CreateDate = DateTime.Now,
+                    Tag = value.Tag,
+                    Title = value.Title,
+                    UserId = this.User.Identity.Name
+                };
+                var result = await _post.AddOrEdit(post);
+                return Ok(new { result = result, Msg = "" });
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return Ok(new { result = false, Msg = ex.Message });
+            }
         }
 
         // DELETE api/values/5
