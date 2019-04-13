@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KevinBlogApi.Core.Model;
 using KevinBlogApi.Core.Model.Interface;
+using KevinBlogApi.Web.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace KevinBlogApi.Web.Controllers
 {
@@ -12,9 +15,11 @@ namespace KevinBlogApi.Web.Controllers
     public class PostsController : ControllerBase
     {
         private IPostRepository _post;
-        public PostsController(IPostRepository post)
+        private ILogger<PostsController> _logger;
+        public PostsController(IPostRepository post, ILogger<PostsController> logger)
         {
             _post = post;
+            _logger = logger;
         }
 
         // GET api/values
@@ -28,8 +33,16 @@ namespace KevinBlogApi.Web.Controllers
         [HttpGet("{slug}")]
         public async Task<ActionResult<string>> Get(string slug)
         {
-            var post = await _post.GetPost(s => s.Slug == slug);
-            return Ok(post);
+            try
+            {
+                var post = await _post.GetPost(s => s.Slug == slug);
+                return Ok(post);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return NotFound();
+            }
         }
 
         // POST api/values
@@ -40,8 +53,17 @@ namespace KevinBlogApi.Web.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put([FromBody] AddPostViewModel value)
         {
+            var post = new Post()
+            {
+                Slug = value.Slug,
+                MarkDown = value.MarkDown,
+                Content = value.Content,
+                CreateDate = DateTime.Now,
+                Tag = value.Tag,
+                Title = value.Title 
+            };
         }
 
         // DELETE api/values/5
