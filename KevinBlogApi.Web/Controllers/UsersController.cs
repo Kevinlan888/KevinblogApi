@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 
 namespace KevinBlogApi.Web.Controllers
 {
@@ -20,12 +21,15 @@ namespace KevinBlogApi.Web.Controllers
     public class UsersController : ControllerBase
     {
         private IConfiguration _config;
-        private UserManager<IdentityUser> _userManager; 
+        private UserManager<IdentityUser> _userManager;
+        private ILogger<UsersController> _logger;
         public UsersController(UserManager<IdentityUser> userManager,
-            IConfiguration config)
+            IConfiguration config,
+            ILogger<UsersController> logger)
         {
             _config = config;
             _userManager = userManager;
+            _logger = logger;
         }
 
         // GET api/values
@@ -70,35 +74,43 @@ namespace KevinBlogApi.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> Login([FromBody] LoginViewModel value)
         {
-            var u = await _userManager.FindByNameAsync(value.UserName);
-            if (u != null)
+            try
             {
-                var lu = await _userManager.CheckPasswordAsync(u, value.Password);
-                if (lu)
+                var u = await _userManager.FindByNameAsync(value.UserName);
+                if (u != null)
                 {
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    var key = Encoding.UTF8.GetBytes(_config.GetSection("AppSettings")["Key"]);
-                    var tokenDescriptor = new SecurityTokenDescriptor
+                    var lu = await _userManager.CheckPasswordAsync(u, value.Password);
+                    if (lu)
                     {
-                        Subject = new ClaimsIdentity(new Claim[]
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        var key = Encoding.UTF8.GetBytes(_config.GetSection("AppSettings")["Key"]);
+                        var tokenDescriptor = new SecurityTokenDescriptor
                         {
-                            new Claim(ClaimTypes.Name, u.Id.ToString())
-                        }),
-                        Expires = DateTime.Now.AddHours(1),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                    };
-                    var token = tokenHandler.CreateToken(tokenDescriptor);
-                    var tokenstr = tokenHandler.WriteToken(token);
-                    return Ok(new { result = true, Msg = tokenstr });
+                            Subject = new ClaimsIdentity(new Claim[]
+                            {
+                                new Claim(ClaimTypes.Name, u.Id.ToString())
+                            }),
+                            Expires = DateTime.Now.AddHours(1),
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                        };
+                        var token = tokenHandler.CreateToken(tokenDescriptor);
+                        var tokenstr = tokenHandler.WriteToken(token);
+                        return Ok(new { result = true, Msg = tokenstr });
+                    }
+                    else
+                    {
+                        return Ok(new { result = false, Msg = "密码错误" });
+                    }
                 }
                 else
                 {
-                    return Ok(new { result = false, Msg = "密码错误" });
+                    return Ok(new { result = false, Msg = "用户不存在" });
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return Ok(new { result = false, Msg = "用户不存在" });
+                _logger.LogError(ex, ex.Message);
+                return Ok(new { result = false, Msg = "Internal error" });
             }
         }
 
@@ -106,12 +118,20 @@ namespace KevinBlogApi.Web.Controllers
         [HttpPut]
         public async Task<ActionResult<string>> Register([FromBody] RegisterViewModel value)
         {
-            var u = new IdentityUser()
+            try
             {
-                UserName = value.UserName
-            };
-            var lu = await _userManager.CreateAsync(u, value.Password);
-            return Ok(new { result = lu.Succeeded });
+                var u = new IdentityUser()
+                {
+                    UserName = value.UserName
+                };
+                var lu = await _userManager.CreateAsync(u, value.Password);
+                return Ok(new { result = lu.Succeeded, Msg = "" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return Ok(new { result = "false", Msg = "Interal error" });
+            }
         }
 
         // DELETE api/values/5
