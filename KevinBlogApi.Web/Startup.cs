@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using KevinBlogApi.Web.Hubs;
 
 namespace KevinBlogApi.Web
 {
@@ -53,6 +54,7 @@ namespace KevinBlogApi.Web
             });
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +80,9 @@ namespace KevinBlogApi.Web
             });            
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            app.UseSignalR(route => {
+                route.MapHub<ChatHub>("/chathub");
+            });
             app.UseMvc();
             app.UseSpa(Options => {
                 Options.Options.SourcePath = "ClientApp/dist";

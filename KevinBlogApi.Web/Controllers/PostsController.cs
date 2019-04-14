@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using KevinBlogApi.Core.Model;
 using KevinBlogApi.Core.Model.Interface;
+using KevinBlogApi.Web.Hubs;
 using KevinBlogApi.Web.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
 namespace KevinBlogApi.Web.Controllers
@@ -18,10 +20,13 @@ namespace KevinBlogApi.Web.Controllers
     {
         private IPostRepository _post;
         private ILogger<PostsController> _logger;
-        public PostsController(IPostRepository post, ILogger<PostsController> logger)
+        private readonly IHubContext<ChatHub> _hubContext;
+        public PostsController(IPostRepository post, ILogger<PostsController> logger,
+            IHubContext<ChatHub> hubContext)
         {
             _post = post;
             _logger = logger;
+            _hubContext = hubContext;
         }
 
         // GET api/values
@@ -58,7 +63,7 @@ namespace KevinBlogApi.Web.Controllers
         // PUT api/values/5
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<string>> Put([FromBody] AddPostViewModel value)
+        public async Task<ActionResult<string>> AddPost([FromBody] AddPostViewModel value)
         {
             try
             {
@@ -73,6 +78,7 @@ namespace KevinBlogApi.Web.Controllers
                     UserId = this.User.Identity.Name
                 };
                 var result = await _post.AddOrEdit(post);
+                await _hubContext.Clients.All.SendAsync("News", "Kevin","I posted an article");
                 return Ok(new { result = result, Msg = "" });
             }
             catch(Exception ex)
@@ -84,8 +90,19 @@ namespace KevinBlogApi.Web.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<string>> DeletePost(string id)
         {
+            try
+            {
+                var result = await _post.DeletePost(id);
+                return Ok(new { Result = result, Msg = "" });
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.HelpLink, ex.Message);
+                return Ok(new { Result = false, Msg = ex.Message });
+            }
         }
     }
 }

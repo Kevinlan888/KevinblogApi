@@ -1,10 +1,7 @@
 ﻿using KevinBlogApi.Core.Model;
 using KevinBlogApi.Core.Model.Interface;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KevinBlogApi.Data.Repository
@@ -33,10 +30,24 @@ namespace KevinBlogApi.Data.Repository
             }
         }
 
+        public async Task<bool> DeletePost(string id)
+        {
+           var post = await _context.Posts.FirstOrDefaultAsync(s => s.PostId == id);
+            if (post != null)
+            {
+                _context.Posts.Remove(post);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else return false;
+        }
+
         public async Task<Post> GetPost(System.Linq.Expressions.Expression<Func<Post, bool>> expression)
         {
             var post = await _context.Posts.FirstOrDefaultAsync(expression);
             return post;
         }
+
+        
     }
 }

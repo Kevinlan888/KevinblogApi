@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KevinBlogApi.Web.Hubs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
 namespace KevinBlogApi.Web.Controllers
@@ -12,10 +14,13 @@ namespace KevinBlogApi.Web.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly ILogger<ValuesController> _logger;
+        private readonly IHubContext<ChatHub> _hubContext;
 
-        public ValuesController(ILogger<ValuesController> logger)
+        public ValuesController(ILogger<ValuesController> logger,
+            IHubContext<ChatHub> hubContext)
         {
             _logger = logger;
+            _hubContext = hubContext;
         }
 
         // GET api/values
@@ -23,6 +28,7 @@ namespace KevinBlogApi.Web.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
             _logger.LogDebug("Someone's getting information");
+            _hubContext.Clients.All.SendAsync("News", "kevin", "I got some text, haha.");
             return new string[] { "value1", "value2" };
         }
 

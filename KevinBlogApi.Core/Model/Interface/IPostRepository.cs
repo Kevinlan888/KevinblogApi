@@ -11,5 +11,7 @@ namespace KevinBlogApi.Core.Model.Interface
         Task<bool> AddOrEdit(Post post);
 
         Task<Post> GetPost(System.Linq.Expressions.Expression<Func<Post, bool>> expression);
+
+        Task<bool> DeletePost(string id);
     }
 }
