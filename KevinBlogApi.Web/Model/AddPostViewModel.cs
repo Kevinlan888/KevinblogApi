@@ -18,6 +18,6 @@ namespace KevinBlogApi.Web.Model
 
         public string Content { get; set; }
 
-        public string Tag { get; set; }
+        public string Tags { get; set; }
     }
 }

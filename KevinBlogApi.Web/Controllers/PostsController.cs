@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using KevinBlogApi.Core.Model;
 using KevinBlogApi.Core.Model.Interface;
 using KevinBlogApi.Web.Hubs;
@@ -21,22 +22,26 @@ namespace KevinBlogApi.Web.Controllers
         private IPostRepository _post;
         private ILogger<PostsController> _logger;
         private readonly IHubContext<ChatHub> _hubContext;
+        private readonly IMapper _mapper;
         public PostsController(IPostRepository post, ILogger<PostsController> logger,
-            IHubContext<ChatHub> hubContext)
+            IHubContext<ChatHub> hubContext, IMapper mapper)
         {
             _post = post;
             _logger = logger;
             _hubContext = hubContext;
+            _mapper = mapper;
         }
 
-        // GET api/values
+        // GET all Post description
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var posts = await _post.ToListAsync();
+            var postDescs = _mapper.Map<IEnumerable<Post>, IEnumerable<ListPostDescViewModel>>(posts);
+            return Ok(postDescs);
         }
 
-        // GET api/values/5
+        // GET a specific post by slug
         [HttpGet("{slug}")]
         public async Task<ActionResult<string>> Get(string slug)
         {
@@ -60,7 +65,7 @@ namespace KevinBlogApi.Web.Controllers
         {
         }
 
-        // PUT api/values/5
+        // Add a Post
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<string>> AddPost([FromBody] AddPostViewModel value)
@@ -73,7 +78,7 @@ namespace KevinBlogApi.Web.Controllers
                     MarkDown = value.MarkDown,
                     Content = value.Content,
                     CreateDate = DateTime.Now,
-                    Tag = value.Tag,
+                    Tags = value.Tags,
                     Title = value.Title,
                     UserId = this.User.Identity.Name
                 };
@@ -88,7 +93,7 @@ namespace KevinBlogApi.Web.Controllers
             }
         }
 
-        // DELETE api/values/5
+        // DELETE a post
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<string>> DeletePost(string id)

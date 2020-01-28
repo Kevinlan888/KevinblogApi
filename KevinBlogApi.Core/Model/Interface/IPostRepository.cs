@@ -12,6 +12,8 @@ namespace KevinBlogApi.Core.Model.Interface
 
         Task<Post> GetPost(System.Linq.Expressions.Expression<Func<Post, bool>> expression);
 
+        Task<IEnumerable<Post>> ToListAsync();        
+
         Task<bool> DeletePost(string id);
     }
 }

@@ -19,7 +19,7 @@ namespace KevinBlogApi.Data.Migrations
                     MarkDown = table.Column<string>(nullable: true),
                     CreateDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
-                    Tag = table.Column<string>(nullable: true),
+                    Tags = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

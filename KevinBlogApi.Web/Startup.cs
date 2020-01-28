@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using KevinBlogApi.Web.Hubs;
+using AutoMapper;
+using KevinBlogApi.Web.Profiles;
 
 namespace KevinBlogApi.Web
 {
@@ -53,6 +55,7 @@ namespace KevinBlogApi.Web
                 };
             });
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddAutoMapper(typeof(ModelProfile));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSignalR();
         }

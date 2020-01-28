@@ -25,7 +25,7 @@ namespace KevinBlogApi.Core.Model
 
         public DateTime? UpdateDate { get; set; }
 
-        public string Tag { get; set; }
+        public string Tags { get; set; }
 
         public string UserId { get; set; }
     }

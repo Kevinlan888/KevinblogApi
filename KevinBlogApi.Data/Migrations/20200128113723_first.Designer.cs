@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KevinBlogApi.Data.Migrations
 {
     [DbContext(typeof(KevinBlogDataContext))]
-    [Migration("20190404070019_first")]
+    [Migration("20200128113723_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("KevinBlogApi.Core.Model.Post", b =>
@@ -33,7 +33,7 @@ namespace KevinBlogApi.Data.Migrations
 
                     b.Property<string>("Slug");
 
-                    b.Property<string>("Tag");
+                    b.Property<string>("Tags");
 
                     b.Property<string>("Title")
                         .HasMaxLength(50);

@@ -2,6 +2,7 @@
 using KevinBlogApi.Core.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace KevinBlogApi.Data.Repository
@@ -48,6 +49,10 @@ namespace KevinBlogApi.Data.Repository
             return post;
         }
 
-        
+        public async Task<IEnumerable<Post>> ToListAsync()
+        {
+            var posts = await _context.Posts.ToListAsync();
+            return posts;
+        }
     }
 }

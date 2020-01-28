@@ -125,7 +125,7 @@ namespace KevinBlogApi.Web.Controllers
                     UserName = value.UserName
                 };
                 var lu = await _userManager.CreateAsync(u, value.Password);
-                return Ok(new { result = lu.Succeeded, Msg = "" });
+                return Ok(new { result = lu.Succeeded, Msg = string.Join(",", lu.Errors?.Select(s => s.Description)) });
             }
             catch (Exception ex)
             {
