@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BlogVue\node_modules\**" />
+    <Content Remove="BlogVue\node_modules\**" />
+    <EmbeddedResource Remove="BlogVue\node_modules\**" />
+    <None Remove="BlogVue\node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.1" />
@@ -19,10 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KevinBlogApi.Data\KevinBlogApi.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\" />
   </ItemGroup>
   
   <ItemGroup>

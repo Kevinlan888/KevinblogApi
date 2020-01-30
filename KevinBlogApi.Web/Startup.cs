@@ -31,7 +31,7 @@ namespace KevinBlogApi.Web
         {
             var key = Configuration.GetSection("AppSettings")["Key"];
             services.AddSpaStaticFiles(Options => {
-                Options.RootPath = "ClientApp/dist";
+                Options.RootPath = "BlogVue/dist";
             });
             services.AddDbContext<KevinBlogDataContext>(Options => {
                 Options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
@@ -88,7 +88,7 @@ namespace KevinBlogApi.Web
             });
             app.UseMvc();
             app.UseSpa(Options => {
-                Options.Options.SourcePath = "ClientApp/dist";
+                Options.Options.SourcePath = "BlogVue/dist";
             });
         }
     }
