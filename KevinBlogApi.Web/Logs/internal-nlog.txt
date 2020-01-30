@@ -1,0 +1,56 @@
+2020-01-30 20:10:06.9353 Info Message Template Auto Format enabled
+2020-01-30 20:10:06.9728 Info Loading assembly: NLog.Web.AspNetCore
+2020-01-30 20:10:07.2112 Info Adding target File Target[allfile]
+2020-01-30 20:10:07.2627 Info Adding target File Target[web]
+2020-01-30 20:10:07.2706 Info Adding target File Target[microsoft]
+2020-01-30 20:10:07.2923 Info Configured from an XML element in D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp2.2\nlog.config...
+2020-01-30 20:10:07.3193 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-01-30 20:10:07.3359 Info Found 63 configuration items
+2020-01-30 20:12:52.4350 Info Message Template Auto Format enabled
+2020-01-30 20:12:52.4951 Info Loading assembly: NLog.Web.AspNetCore
+2020-01-30 20:12:52.7186 Info Adding target File Target[allfile]
+2020-01-30 20:12:52.7471 Info Adding target File Target[web]
+2020-01-30 20:12:52.7654 Info Adding target File Target[microsoft]
+2020-01-30 20:12:52.7947 Info Configured from an XML element in D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp2.2\nlog.config...
+2020-01-30 20:12:52.8322 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-01-30 20:12:52.8636 Info Found 63 configuration items
+2020-01-30 20:15:51.3468 Info Message Template Auto Format enabled
+2020-01-30 20:15:51.3682 Info Loading assembly: NLog.Web.AspNetCore
+2020-01-30 20:15:51.4744 Info Adding target File Target[allfile]
+2020-01-30 20:15:51.4975 Info Adding target File Target[web]
+2020-01-30 20:15:51.5055 Info Adding target File Target[microsoft]
+2020-01-30 20:15:51.5242 Info Configured from an XML element in D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp2.2\nlog.config...
+2020-01-30 20:15:51.5528 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-01-30 20:15:51.5714 Info Found 63 configuration items
+2020-01-30 20:16:28.5069 Info Message Template Auto Format enabled
+2020-01-30 20:16:28.5276 Info Loading assembly: NLog.Web.AspNetCore
+2020-01-30 20:16:28.6403 Info Adding target File Target[allfile]
+2020-01-30 20:16:28.6593 Info Adding target File Target[web]
+2020-01-30 20:16:28.6593 Info Adding target File Target[microsoft]
+2020-01-30 20:16:28.6859 Info Configured from an XML element in D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp2.2\nlog.config...
+2020-01-30 20:16:28.7110 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-01-30 20:16:28.7264 Info Found 63 configuration items
+2020-01-30 21:58:15.1668 Info Message Template Auto Format enabled
+2020-01-30 21:58:15.1826 Info Loading assembly: NLog.Web.AspNetCore
+2020-01-30 21:58:15.2823 Info Adding target File Target[allfile]
+2020-01-30 21:58:15.3040 Info Adding target File Target[web]
+2020-01-30 21:58:15.3040 Info Adding target File Target[microsoft]
+2020-01-30 21:58:15.3178 Info Configured from an XML element in D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp2.2\nlog.config...
+2020-01-30 21:58:15.3305 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-01-30 21:58:15.3305 Info Found 63 configuration items
+2020-01-30 23:06:02.2779 Info Message Template Auto Format enabled
+2020-01-30 23:06:02.2949 Info Loading assembly: NLog.Web.AspNetCore
+2020-01-30 23:06:02.3780 Info Adding target File Target[allfile]
+2020-01-30 23:06:02.3780 Info Adding target File Target[web]
+2020-01-30 23:06:02.3953 Info Adding target File Target[microsoft]
+2020-01-30 23:06:02.4088 Info Configured from an XML element in D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp2.2\nlog.config...
+2020-01-30 23:06:02.4227 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-01-30 23:06:02.4227 Info Found 63 configuration items
+2020-01-30 23:22:02.4881 Info Message Template Auto Format enabled
+2020-01-30 23:22:02.5029 Info Loading assembly: NLog.Web.AspNetCore
+2020-01-30 23:22:02.5795 Info Adding target File Target[allfile]
+2020-01-30 23:22:02.5795 Info Adding target File Target[web]
+2020-01-30 23:22:02.5997 Info Adding target File Target[microsoft]
+2020-01-30 23:22:02.6126 Info Configured from an XML element in D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp2.2\nlog.config...
+2020-01-30 23:22:02.6293 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-01-30 23:22:02.6293 Info Found 63 configuration items

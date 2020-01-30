@@ -17,18 +17,18 @@ namespace KevinBlogApi.Data.Repository
 
         public async Task<bool> AddOrEdit(Post post)
         {
+            var ret = false;
             if(string.IsNullOrEmpty(post.PostId))
             {
                 post.PostId = Guid.NewGuid().ToString();
                 await _context.Posts.AddAsync(post);
-                await _context.SaveChangesAsync();
-                return true;
             }
             else
             {
                 _context.Posts.Update(post);
-                return true;
             }
+            await _context.SaveChangesAsync();
+            return ret;
         }
 
         public async Task<bool> DeletePost(string id)

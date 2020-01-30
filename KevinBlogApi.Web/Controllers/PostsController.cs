@@ -74,6 +74,7 @@ namespace KevinBlogApi.Web.Controllers
             {
                 var post = new Post()
                 {
+                    PostId = value.postId,
                     Slug = value.Slug,
                     MarkDown = value.MarkDown,
                     Content = value.Content,

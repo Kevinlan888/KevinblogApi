@@ -8,6 +8,8 @@ namespace KevinBlogApi.Web.Model
 {
     public class AddPostViewModel
     {
+        public string postId { get; set; }
+
         [RegularExpression("([a-zA-Z-_0-9]){3,}", ErrorMessage = "Slug 仅允许包含连字符和下划线和数字字母")]
         public string Slug { get; set; }
 
