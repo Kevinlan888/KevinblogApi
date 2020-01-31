@@ -22,10 +22,12 @@ namespace KevinBlogApi.Data.Repository
             {
                 post.PostId = Guid.NewGuid().ToString();
                 await _context.Posts.AddAsync(post);
+                ret = true;
             }
             else
             {
                 _context.Posts.Update(post);
+                ret = true;
             }
             await _context.SaveChangesAsync();
             return ret;

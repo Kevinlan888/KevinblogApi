@@ -110,5 +110,11 @@ namespace KevinBlogApi.Web.Controllers
                 return Ok(new { Result = false, Msg = ex.Message });
             }
         }
+
+        [HttpGet]
+        public async Task Testchat()
+        {
+            await _hubContext.Clients.All.SendAsync("News", "test", "hahah");
+        }
     }
 }
