@@ -35,7 +35,7 @@ namespace KevinBlogApi.Web
                 Options.RootPath = "BlogVue/dist";
             });
             services.AddDbContext<KevinBlogDataContext>(Options => {
-                Options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                Options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
             
             services.AddIdentity<IdentityUser, IdentityRole>(Options =>
