@@ -2,11 +2,9 @@
 using KevinBlogApi.Core.Model.Interface;
 using KevinBlogApi.Data;
 using KevinBlogApi.Data.Repository;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +12,9 @@ using Microsoft.IdentityModel.Tokens;
 using KevinBlogApi.Web.Hubs;
 using AutoMapper;
 using KevinBlogApi.Web.Profiles;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.SpaServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace KevinBlogApi.Web
 {
@@ -56,12 +57,12 @@ namespace KevinBlogApi.Web
             });
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddAutoMapper(typeof(ModelProfile));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSignalR();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -75,18 +76,15 @@ namespace KevinBlogApi.Web
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            app.UseCors(Options => {
-                Options.AllowAnyHeader();
-                Options.AllowAnyMethod();
-                Options.AllowAnyOrigin();
-                Options.AllowCredentials();
-            });            
+            app.UseCors();            
             app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseAuthentication();
-            app.UseSignalR(route => {
-                route.MapHub<ChatHub>("/chathub");
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("/chat");
+                endpoints.MapControllers();
             });
-            app.UseMvc();
             app.UseSpa(Options => {
                 Options.Options.SourcePath = "BlogVue/dist";
             });

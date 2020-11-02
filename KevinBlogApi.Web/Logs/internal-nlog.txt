@@ -14,3 +14,31 @@
 2020-02-12 22:36:19.2547 Info Configured from an XML element in D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp2.2\nlog.config...
 2020-02-12 22:36:19.2726 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
 2020-02-12 22:36:19.2851 Info Found 63 configuration items
+2020-11-02 15:36:27.2219 Info Message Template Auto Format enabled
+2020-11-02 15:36:27.2361 Info Loading assembly: NLog.Web.AspNetCore
+2020-11-02 15:36:27.3617 Info Adding target FileTarget(Name=allfile)
+2020-11-02 15:36:27.4045 Info Adding target FileTarget(Name=web)
+2020-11-02 15:36:27.4045 Info Adding target FileTarget(Name=microsoft)
+2020-11-02 15:36:27.4456 Info Validating config: TargetNames=microsoft, web, ConfigItems=63, FilePath=D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp3.1\nlog.config
+2020-11-02 15:36:27.4533 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-11-02 15:37:56.0977 Info Message Template Auto Format enabled
+2020-11-02 15:37:56.1165 Info Loading assembly: NLog.Web.AspNetCore
+2020-11-02 15:37:56.1868 Info Adding target FileTarget(Name=allfile)
+2020-11-02 15:37:56.2139 Info Adding target FileTarget(Name=web)
+2020-11-02 15:37:56.2139 Info Adding target FileTarget(Name=microsoft)
+2020-11-02 15:37:56.2575 Info Validating config: TargetNames=microsoft, web, ConfigItems=63, FilePath=D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp3.1\nlog.config
+2020-11-02 15:37:56.2799 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-11-02 15:38:17.1187 Info Message Template Auto Format enabled
+2020-11-02 15:38:17.1472 Info Loading assembly: NLog.Web.AspNetCore
+2020-11-02 15:38:17.2803 Info Adding target FileTarget(Name=allfile)
+2020-11-02 15:38:17.3161 Info Adding target FileTarget(Name=web)
+2020-11-02 15:38:17.3161 Info Adding target FileTarget(Name=microsoft)
+2020-11-02 15:38:17.3642 Info Validating config: TargetNames=microsoft, web, ConfigItems=63, FilePath=D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp3.1\nlog.config
+2020-11-02 15:38:17.3727 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-11-02 15:41:00.6767 Info Message Template Auto Format enabled
+2020-11-02 15:41:00.6907 Info Loading assembly: NLog.Web.AspNetCore
+2020-11-02 15:41:00.7728 Info Adding target FileTarget(Name=allfile)
+2020-11-02 15:41:00.7805 Info Adding target FileTarget(Name=web)
+2020-11-02 15:41:00.7805 Info Adding target FileTarget(Name=microsoft)
+2020-11-02 15:41:00.8489 Info Validating config: TargetNames=microsoft, web, ConfigItems=63, FilePath=D:\cs\KevinblogApi\KevinBlogApi.Web\bin\Debug\netcoreapp3.1\nlog.config
+2020-11-02 15:41:00.8573 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile

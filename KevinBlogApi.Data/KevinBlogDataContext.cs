@@ -20,6 +20,7 @@ namespace KevinBlogApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Ignore<Post>();
             modelBuilder.Ignore<IdentityUser>();
             modelBuilder.Ignore<IdentityRole>();
@@ -27,7 +28,6 @@ namespace KevinBlogApi.Data
             modelBuilder.Ignore<IdentityUserRole<string>>();
             modelBuilder.Ignore<IdentityUserLogin<string>>();
             modelBuilder.Ignore<IdentityUserToken<string>>();
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Post>().HasIndex(s => s.Slug).IsUnique();
             modelBuilder.Entity<Post>().ToTable("Posts").HasKey(s => s.PostId);
             modelBuilder.Entity<IdentityUser>().ToTable("Users").HasKey(s => s.Id);
