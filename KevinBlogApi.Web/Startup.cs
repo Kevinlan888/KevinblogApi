@@ -30,6 +30,13 @@ namespace KevinBlogApi.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => {
+                options.AddDefaultPolicy(
+                builder => {
+                    builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             var key = Configuration.GetSection("AppSettings")["Key"];
             services.AddSpaStaticFiles(Options => {
                 Options.RootPath = "BlogVue/dist";
@@ -78,8 +85,9 @@ namespace KevinBlogApi.Web
             app.UseSpaStaticFiles();
             app.UseCors();            
             app.UseHttpsRedirection();
-            app.UseRouting();
             app.UseAuthentication();
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<ChatHub>("/chat");

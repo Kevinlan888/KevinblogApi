@@ -72,18 +72,51 @@ namespace KevinBlogApi.Web.Controllers
         {
             try
             {
-                var post = new Post()
+                var post = await _post.GetPost(s => s.Slug == value.Slug);
+                Post post2 = null;
+                if (value.postId == null)
                 {
-                    PostId = value.postId,
-                    Slug = value.Slug,
-                    MarkDown = value.MarkDown,
-                    Content = value.Content,
-                    CreateDate = DateTime.Now,
-                    Tags = value.Tags,
-                    Title = value.Title,
-                    UserId = this.User.Identity.Name
-                };
-                var result = await _post.AddOrEdit(post);
+                    if (post != null)
+                    {
+                        return BadRequest(new { result = false, Msg = "slug already existed." });
+                    }
+                    else
+                    {
+                        post2 = new Post()
+                        {
+                            PostId = value.postId,
+                            Slug = value.Slug,
+                            MarkDown = value.MarkDown,
+                            Content = value.Content,
+                            CreateDate = DateTime.Now,
+                            Tags = value.Tags,
+                            Title = value.Title,
+                            UserId = this.User.Identity.Name
+                        };
+                    }
+                }
+                else
+                {
+                    post2 = await _post.GetPost(s => s.PostId == value.postId);
+                    if (post != null)
+                    {
+                        if (post.UserId != post2.UserId)
+                        {
+                            return BadRequest(new { result = false, Msg = "slug already existed." });
+                        }
+                    }
+                    else
+                    {
+                        post2.Slug = value.Slug;
+                        post2.MarkDown = value.MarkDown;
+                        post2.Content = value.Content;
+                        post2.Title = value.Title;
+                        post2.Tags = value.Tags;
+                        post2.UpdateDate = DateTime.Now;
+                    }
+                }
+
+                var result = await _post.AddOrEdit(post2);
                 await _hubContext.Clients.All.SendAsync("News", "Kevin","I posted an article");
                 return Ok(new { result = result, Msg = "" });
             }
