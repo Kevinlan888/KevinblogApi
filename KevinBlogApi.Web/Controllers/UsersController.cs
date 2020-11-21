@@ -58,16 +58,16 @@ namespace KevinBlogApi.Web.Controllers
         //        if (lu)
         //        {
         //            await _signInManager.SignInAsync(u, true);
-        //            return Ok(new { result = true, Msg = "" });
+        //            return Ok(new { result = true, msg = "" });
         //        }
         //        else
         //        {
-        //            return Ok(new { result = false, Msg = "密码错误"});
+        //            return Ok(new { result = false, msg = "密码错误"});
         //        }
         //    }
         //    else
         //    {
-        //        return Ok(new { result = false, Msg = "用户不存在" });
+        //        return Ok(new { result = false, msg = "用户不存在" });
         //    }
         //}
 
@@ -95,22 +95,22 @@ namespace KevinBlogApi.Web.Controllers
                         };
                         var token = tokenHandler.CreateToken(tokenDescriptor);
                         var tokenstr = tokenHandler.WriteToken(token);
-                        return Ok(new { result = true, Msg = tokenstr });
+                        return Ok(new { result = true, msg = tokenstr });
                     }
                     else
                     {
-                        return Ok(new { result = false, Msg = "密码错误" });
+                        return Ok(new { result = false, msg = "密码错误" });
                     }
                 }
                 else
                 {
-                    return Ok(new { result = false, Msg = "用户不存在" });
+                    return Ok(new { result = false, msg = "用户不存在" });
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return Ok(new { result = false, Msg = "Internal error" });
+                return Ok(new { result = false, msg = "Internal error" });
             }
         }
 
@@ -125,12 +125,12 @@ namespace KevinBlogApi.Web.Controllers
                     UserName = value.UserName
                 };
                 var lu = await _userManager.CreateAsync(u, value.Password);
-                return Ok(new { result = lu.Succeeded, Msg = string.Join(",", lu.Errors?.Select(s => s.Description)) });
+                return Ok(new { result = lu.Succeeded, msg = string.Join(",", lu.Errors?.Select(s => s.Description)) });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return Ok(new { result = "false", Msg = "Interal error" });
+                return Ok(new { result = "false", msg = "Interal error" });
             }
         }
 

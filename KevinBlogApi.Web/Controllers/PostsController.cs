@@ -52,7 +52,7 @@ namespace KevinBlogApi.Web.Controllers
                     return Ok(post);
                 else return NotFound();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
                 return NotFound();
@@ -78,7 +78,7 @@ namespace KevinBlogApi.Web.Controllers
                 {
                     if (post != null)
                     {
-                        return BadRequest(new { result = false, Msg = "slug already existed." });
+                        return Ok(new { result = false, msg = "slug already existed." });
                     }
                     else
                     {
@@ -98,15 +98,13 @@ namespace KevinBlogApi.Web.Controllers
                 else
                 {
                     post2 = await _post.GetPost(s => s.PostId == value.postId);
-                    if (post != null)
+                    if (post2 != null)
                     {
-                        if (post.UserId != post2.UserId)
+                        if (post != null && post.PostId != post2.PostId)
                         {
-                            return BadRequest(new { result = false, Msg = "slug already existed." });
+                            return Ok(new { result = false, msg = "slug already existed." });
                         }
-                    }
-                    else
-                    {
+
                         post2.Slug = value.Slug;
                         post2.MarkDown = value.MarkDown;
                         post2.Content = value.Content;
@@ -114,16 +112,20 @@ namespace KevinBlogApi.Web.Controllers
                         post2.Tags = value.Tags;
                         post2.UpdateDate = DateTime.Now;
                     }
+                    else
+                    {
+                        return Ok(new { result = false, msg = "Post not exist." });
+                    }
                 }
 
                 var result = await _post.AddOrEdit(post2);
-                await _hubContext.Clients.All.SendAsync("News", "Kevin","I posted an article");
-                return Ok(new { result = result, Msg = "" });
+                await _hubContext.Clients.All.SendAsync("News", "Kevin", "I posted an article");
+                return Ok(new { result = result, msg = "" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return Ok(new { result = false, Msg = ex.Message });
+                return Ok(new { result = false, msg = ex.Message });
             }
         }
 
@@ -135,12 +137,12 @@ namespace KevinBlogApi.Web.Controllers
             try
             {
                 var result = await _post.DeletePost(id);
-                return Ok(new { Result = result, Msg = "" });
+                return Ok(new { Result = result, msg = "" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.HelpLink, ex.Message);
-                return Ok(new { Result = false, Msg = ex.Message });
+                return Ok(new { Result = false, msg = ex.Message });
             }
         }
 

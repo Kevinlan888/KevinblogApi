@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/KevinBlogApi.Web/bin/Debug/netcoreapp2.2/KevinBlogApi.Web.dll",
+            "program": "${workspaceFolder}/KevinBlogApi.Web/bin/Debug/netcoreapp3.1/KevinBlogApi.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/KevinBlogApi.Web",
             "stopAtEntry": false,
