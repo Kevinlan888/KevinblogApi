@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace KevinBlogApi.Web.Controllers
@@ -23,22 +24,34 @@ namespace KevinBlogApi.Web.Controllers
         private ILogger<PostsController> _logger;
         private readonly IHubContext<ChatHub> _hubContext;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _memoryCache;
         public PostsController(IPostRepository post, ILogger<PostsController> logger,
-            IHubContext<ChatHub> hubContext, IMapper mapper)
+            IHubContext<ChatHub> hubContext, IMapper mapper,
+            IMemoryCache memoryCache)
         {
             _post = post;
             _logger = logger;
             _hubContext = hubContext;
             _mapper = mapper;
+            _memoryCache = memoryCache;
         }
 
         // GET all Post description
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            var posts = await _post.ToListAsync();
-            var postDescs = _mapper.Map<IEnumerable<Post>, IEnumerable<ListPostDescViewModel>>(posts);
-            return Ok(postDescs);
+            var posts = _memoryCache.Get<IEnumerable<ListPostDescViewModel>>(DateTime.Now.ToString("yyyyMMddHHmm"));
+            if (posts != null)
+            {
+                return Ok(posts);
+            }
+            else
+            {
+                var _posts = await _post.ToListAsync();
+                var postDescs = _mapper.Map<IEnumerable<Post>, IEnumerable<ListPostDescViewModel>>(_posts);
+                _memoryCache.Set<IEnumerable<ListPostDescViewModel>>(DateTime.Now.ToString("yyyyMMddHHmm"), postDescs);
+                return Ok(postDescs);
+            }
         }
 
         // GET a specific post by slug
@@ -47,10 +60,21 @@ namespace KevinBlogApi.Web.Controllers
         {
             try
             {
-                var post = await _post.GetPost(s => s.Slug == slug);
+                var post = _memoryCache.Get<Post>(slug +  DateTime.Now.ToString("yyyyMMddHHmm"));
                 if (post != null)
+                {
                     return Ok(post);
-                else return NotFound();
+                }
+                else
+                {
+                    post = await _post.GetPost(s => s.Slug == slug);
+                    if (post != null)
+                    {
+                        _memoryCache.Set<Post>(slug + DateTime.Now.ToString("yyyyMMddHHmm"), post);
+                        return Ok(post);
+                    }
+                    else return NotFound();
+                }
             }
             catch (Exception ex)
             {

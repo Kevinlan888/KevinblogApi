@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /KevinBlogApi.Web/Logs/internal-nlog.txt
+/KevinBlogApi.Web/blog.db
