@@ -91,7 +91,7 @@ namespace KevinBlogApi.Web.Controllers
 
         // Add a Post
         [HttpPut]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult<string>> AddPost([FromBody] AddPostViewModel value)
         {
             try
@@ -155,7 +155,7 @@ namespace KevinBlogApi.Web.Controllers
 
         // DELETE a post
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult<string>> DeletePost(string id)
         {
             try
