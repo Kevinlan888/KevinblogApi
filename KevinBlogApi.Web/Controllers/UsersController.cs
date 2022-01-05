@@ -23,6 +23,7 @@ namespace KevinBlogApi.Web.Controllers
         private IConfiguration _config;
         private UserManager<IdentityUser> _userManager;
         private ILogger<UsersController> _logger;
+
         public UsersController(UserManager<IdentityUser> userManager,
             IConfiguration config,
             ILogger<UsersController> logger)
@@ -84,15 +85,22 @@ namespace KevinBlogApi.Web.Controllers
                     {
                         var tokenHandler = new JwtSecurityTokenHandler();
                         var key = Encoding.UTF8.GetBytes(_config.GetSection("AppSettings")["Key"]);
+                        var roles = await _userManager.GetRolesAsync(u);
+                        
+                        List<Claim> claims = new List<Claim>();
+                        claims.Add(new Claim(ClaimTypes.Name, u.Id.ToString()));
+                        foreach (var role in roles)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, role));
+                        }
+
                         var tokenDescriptor = new SecurityTokenDescriptor
                         {
-                            Subject = new ClaimsIdentity(new Claim[]
-                            {
-                                new Claim(ClaimTypes.Name, u.Id.ToString())
-                            }),
+                            Subject = new ClaimsIdentity(claims.ToArray()),
                             Expires = DateTime.Now.AddHours(1),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                         };
+
                         var token = tokenHandler.CreateToken(tokenDescriptor);
                         var tokenstr = tokenHandler.WriteToken(token);
                         return Ok(new { result = true, msg = tokenstr });
@@ -125,6 +133,11 @@ namespace KevinBlogApi.Web.Controllers
                     UserName = value.UserName
                 };
                 var lu = await _userManager.CreateAsync(u, value.Password);
+                if (lu.Succeeded)
+                {
+                   lu = await _userManager.AddToRoleAsync(u, "User");
+                }
+
                 return Ok(new { result = lu.Succeeded, msg = string.Join(",", lu.Errors?.Select(s => s.Description)) });
             }
             catch (Exception ex)

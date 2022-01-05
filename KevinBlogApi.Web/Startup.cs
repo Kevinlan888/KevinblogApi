@@ -44,7 +44,7 @@ namespace KevinBlogApi.Web
             services.AddDbContext<KevinBlogDataContext>(Options => {
                 Options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
-            
+
             services.AddIdentity<IdentityUser, IdentityRole>(Options =>
             {
                 Options.User.RequireUniqueEmail = false;
@@ -70,7 +70,8 @@ namespace KevinBlogApi.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env
+            , UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -97,6 +98,9 @@ namespace KevinBlogApi.Web
             app.UseSpa(Options => {
                 Options.Options.SourcePath = "BlogVue/dist";
             });
+
+
+            DefaultDataInitializer.SeedData(userManager, roleManager);
         }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KevinBlogApi.Data.Migrations
 {
     [DbContext(typeof(KevinBlogDataContext))]
-    [Migration("20201102081207_INIT")]
+    [Migration("20220105033139_INIT")]
     partial class INIT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -190,15 +190,15 @@ namespace KevinBlogApi.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<string>("RoleId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("RoleId");
+                    b.Property<string>("RoleId")
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("UserRoles");
+                    b.HasKey("UserId", "RoleId");
+
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
